@@ -7,4 +7,16 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  namespace :api do
+    namespace :v0 do
+      resources :subscriptions, only: [:create] do
+        put 'unsubscribe', on: :member
+      end
+
+      resources :customers do
+        resources :subscriptions, only: [:index], controller: 'customers/subscriptions'
+      end
+
+    end
+  end  
 end
